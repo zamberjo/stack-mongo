@@ -1,0 +1,29 @@
+version: '2.3'
+
+services:
+  mongo:
+    image: mongo:3.0.15-wheezy
+    restart: unless-stopped
+    volumes:
+      - ./mongo:/etc/mongo
+      - mongo-volume:/data/db
+    networks:
+      - mongo-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-admin}
+    command:
+      - --journal
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet || exit 1
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  mongo-volume: {}
+
+networks:
+  mongo-network:
+    external: true
