@@ -24,6 +24,8 @@ RUN set -ex \
         --gecos '' \
         --no-create-home \
         mongodb \
+    && mkdir -p /data/db \
+    && chown mongodb. /data/db \
     && apt-get remove --yes --purge \
         wget ca-certificates \
     && rm -rf \
