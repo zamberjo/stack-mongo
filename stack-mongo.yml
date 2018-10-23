@@ -9,9 +9,6 @@ services:
       - mongo-volume:/data/db
     networks:
       - mongo-network
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-admin}
     command:
       - --journal
     healthcheck:
